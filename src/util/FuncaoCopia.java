@@ -63,14 +63,14 @@ public class FuncaoCopia {
             try {
                 tagMedia = (Element) tagSeq.getElementsByTagName("media").item(i);
                 caminho = tagMedia.getAttribute("src");
-                caminho = caminho.replaceFirst("...\\..", "");
-                caminho = usuario.concat(caminho);
+
                 arquivo = new File(caminho);
                 destino = new File(pasta + "\\" + arquivo.getName());
 
                 copiarArquivo(arquivo, destino);
+                
                 barraProgresso.setValue(i + 1);
-                labelStatus.setText(caminho);
+                labelStatus.setText(arquivo.getAbsolutePath());
             } catch (NullPointerException ex) {
                 JOptionPane.showMessageDialog(null, "Erro, ponto nulo: " + ex.getMessage());
             } catch (IOException ex) {
