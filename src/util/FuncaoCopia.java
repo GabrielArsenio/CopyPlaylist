@@ -28,7 +28,6 @@ public class FuncaoCopia {
     public boolean iniciarCopia(File lista, String pasta, JProgressBar barraProgresso, JLabel labelStatus) {
         int qtdElementos;
         String caminho;
-        String usuario = System.getProperty("user.home");
         File arquivo;
         File destino;
 
@@ -68,7 +67,7 @@ public class FuncaoCopia {
                 destino = new File(pasta + "\\" + arquivo.getName());
 
                 copiarArquivo(arquivo, destino);
-                
+
                 barraProgresso.setValue(i + 1);
                 labelStatus.setText(arquivo.getAbsolutePath());
             } catch (NullPointerException ex) {
