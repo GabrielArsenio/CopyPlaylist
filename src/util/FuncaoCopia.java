@@ -63,9 +63,24 @@ public class FuncaoCopia {
                 tagMedia = (Element) tagSeq.getElementsByTagName("media").item(i);
                 caminho = tagMedia.getAttribute("src");
 
-                arquivo = new File(caminho);
-                destino = new File(pasta + "\\" + arquivo.getName());
+                caminho = caminho.replaceAll("....\\.", "");
 
+                arquivo = new File(lista.getParent(), caminho);
+                destino = new File(pasta, arquivo.getName());
+
+                JOptionPane.showMessageDialog(null, ""
+                        + "\nHome     : " + System.getProperty("user.home") + ""
+                        + "\nCanonical: " + arquivo.getCanonicalPath() + ""
+                        + "\nAbsolute : " + arquivo.getAbsolutePath() + ""
+                        + "\nPath     : " + arquivo.getPath() + ""
+                        + "\nLista    : " + lista.getParent());
+
+                if (!arquivo.canRead() || !destino.canRead()) {
+                    JOptionPane.showMessageDialog(null, "Não leu");
+                    continue;
+                } else {
+                    JOptionPane.showMessageDialog(null, "leu");
+                }
                 copiarArquivo(arquivo, destino);
 
                 barraProgresso.setValue(i + 1);
@@ -101,5 +116,20 @@ public class FuncaoCopia {
                 arquivoDestino.close();
             }
         }
+    }
+
+    public String diminuirCaminho(String caminho, int qtdMenos) {
+        for (int j = 0; j < qtdMenos; j++) {
+            for (int i = caminho.length(); i >= 0; i--) {
+                try {
+                    if (caminho.substring(i, i + 1).equals("\\")) {
+                        caminho = caminho.substring(0, i);
+                        break;
+                    }
+                } catch (Exception e) {
+                }
+            }
+        }
+        return caminho;
     }
 }
