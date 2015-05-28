@@ -27,7 +27,9 @@ public class FuncaoCopia {
 
     public boolean iniciarCopia(File lista, String pasta, JProgressBar barraProgresso, JLabel labelStatus) {
         int qtdElementos;
+        int qtdVolta;
         String caminho;
+        String caminhoLista;
         File arquivo;
         File destino;
 
@@ -62,10 +64,11 @@ public class FuncaoCopia {
             try {
                 tagMedia = (Element) tagSeq.getElementsByTagName("media").item(i);
                 caminho = tagMedia.getAttribute("src");
-
+                qtdVolta = caminho.split("....\\.").length - 1;
                 caminho = caminho.replaceAll("....\\.", "");
+                caminhoLista = diminuirCaminho(lista.getParent(), qtdVolta);
 
-                arquivo = new File(lista.getParent(), caminho);
+                arquivo = new File(caminhoLista, caminho);
                 destino = new File(pasta, arquivo.getName());
 
                 JOptionPane.showMessageDialog(null, ""
@@ -118,8 +121,8 @@ public class FuncaoCopia {
         }
     }
 
-    public String diminuirCaminho(String caminho, int qtdMenos) {
-        for (int j = 0; j < qtdMenos; j++) {
+    public String diminuirCaminho(String caminho, int qtdVolta) {
+        for (int j = 0; j < qtdVolta; j++) {
             for (int i = caminho.length(); i >= 0; i--) {
                 try {
                     if (caminho.substring(i, i + 1).equals("\\")) {
